@@ -15,6 +15,7 @@ class CatalogItem extends StatelessWidget {
         child: Row(
       children: [
         Hero(
+          
           tag: Key(catalogItem.id.toString()),
           child: CatalogImage(
             image: catalogItem.image,

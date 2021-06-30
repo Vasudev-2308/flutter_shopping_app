@@ -32,7 +32,7 @@ class Details extends StatelessWidget {
           children: [
             Hero(
                     tag: Key(catalog.id.toString()),
-                    child: Expanded(child: Image.network(catalog.image)))
+                    child: Image.network(catalog.image))
                 .h40(context),
             Expanded(
                 child: VxArc(
@@ -40,27 +40,24 @@ class Details extends StatelessWidget {
               arcType: VxArcType.CONVEY,
               height: 20,
               child: Container(
-                  color: context.cardColor,
-                  width: context.screenWidth,
-                  child: SingleChildScrollView(
-                                      child: Column(
-                      children: [
-                        catalog.name.text.xl3
-                            .color(context.accentColor)
-                            .bold
-                            .make(),
-                        catalog.desc.text.xl.color(context.accentColor).make(),
-                        Padding(
-                          padding: Vx.mOnly(top: 20),
-                          child: "Labore ea dolore lorem sea et sit invidunt diam, dolore lorem ipsum eos eos tempor et gubergren takimata voluptua. Sea takimata sea ipsum rebum sed voluptua consetetur, lorem sea amet clita consetetur consetetur tempor. Tempor lorem dolores invidunt accusam magna ipsum tempor, diam eirmod dolor eirmod ipsum nonumy lorem et."
-                              .text
-                              .make()
-                              .px16(),
-                        )
-                      ],
-                    ).py64(),
-                  ),
+                color: context.cardColor,
+                width: context.screenWidth,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      catalog.name.text.xl3
+                          .color(context.accentColor)
+                          .bold
+                          .make(),
+                      catalog.desc.text.xl.color(context.accentColor).make(),
+                      "Labore ea dolore lorem sea et sit invidunt diam, dolore lorem ipsum eos eos tempor et gubergren takimata voluptua. Sea takimata sea ipsum rebum sed voluptua consetetur, lorem sea amet clita consetetur consetetur tempor. Tempor lorem dolores invidunt accusam magna ipsum tempor."
+                          .text
+                          .make()
+                          .p16()
+                    ],
+                  ).py64(),
                 ),
+              ),
             )),
           ],
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shopping_app/core/store.dart';
 import 'package:shopping_app/models/cart_model.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -30,17 +31,23 @@ class _CartTotal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _cartmodel = CartModel();
+    final CartModel _cart = (VxState.store as MyStore).cart;
     return SizedBox(
       height: 150,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          "\$ ${_cartmodel.totalPrice}"
-              .text
-              .xl4
-              .color(context.accentColor)
-              .make(),
+          VxConsumer(
+            builder: (context, store, _) {
+              return "\$ ${_cart.totalPrice}"
+                  .text
+                  .xl4
+                  .color(context.accentColor)
+                  .make();
+            },
+            mutations: {RemoveMutation},
+            notifications: {},
+          ),
           30.widthBox,
           ElevatedButton(
                   onPressed: () {
@@ -63,30 +70,30 @@ class _CartTotal extends StatelessWidget {
 }
 
 class CartList extends StatelessWidget {
-    final _cartmodel = CartModel();
-    CartList({Key? key}) : super(key: key);
+  CartList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return _cartmodel.items.isEmpty
-        ? Center(child: "Nothing to Show".text.xl3.make())
+    VxState.watch(context, on: [RemoveMutation]);
+    final CartModel _cart = (VxState.store as MyStore).cart;
+    return _cart.items.isEmpty
+        ? Center(child: "Nothing to Show".text.xl2.make())
         : ListView.builder(
-            itemCount: _cartmodel.items.length,
+            itemCount: _cart.items.length,
             itemBuilder: (context, index) {
               return ListTile(
                 leading: Icon(
                   Icons.done,
                   color: Colors.green,
                 ),
-                title: _cartmodel.items[index].name.text.make(),
+                title: _cart.items[index].name.text.make(),
                 trailing: IconButton(
                   icon: Icon(
                     CupertinoIcons.minus_circle,
                     color: context.accentColor,
                   ),
                   onPressed: () {
-                    _cartmodel.remove(_cartmodel.items[index]);
-                    
+                    RemoveMutation(_cart.items[index]);
                   },
                 ),
               );
